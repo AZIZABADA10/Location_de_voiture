@@ -1,5 +1,5 @@
-CREATE DATABASE mabagnole;
-use mabagnole;
+CREATE DATABASE mabagnole_v2;
+use mabagnole_v2;
 
 create table utilisateur (
     id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
@@ -81,3 +81,33 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+/* les neveau table */
+create table Theme (
+    id_theme int PRIMARY key AUTO_INCREMENT,
+    titre varchar(50) not NULL,
+    description varchar(50)
+);
+
+CREATE table Article (
+    id_article int AUTO_INCREMENT PRIMARY key,
+    titre varchar(90) not null,
+    contenu varchar(100) not null,
+    statut_article boolean,
+    id_theme int,
+    foreign key (id_theme) references Theme(id_theme)
+);
+
+
+create table Tag (
+    id_tag int AUTO_INCREMENT PRIMARY key,
+    tag varchar(50) not null
+);
+
+create table tagArticle(
+    id_tagArticle int AUTO_INCREMENT PRIMARY key,
+    id_tag int,
+    id_article int,
+    foreign key (id_tag) references Tag(id_tag),
+    foreign key (id_article) references Article(id_article)
+);
