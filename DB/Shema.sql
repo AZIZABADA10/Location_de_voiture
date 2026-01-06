@@ -1,0 +1,83 @@
+CREATE DATABASE mabagnole;
+use mabagnole;
+
+create table utilisateur (
+    id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+    nom varchar(50),
+    email varchar(200) unique,
+    mot_de_passe varchar(256),
+    `role` enum('admin', 'client') default 'client'
+);
+
+create table categorie (
+    id_categorie int PRIMARY key AUTO_INCREMENT,
+    titre varchar(50),
+    `description` text
+);
+
+create table vehicule (
+    id_vehicule INT PRIMARY KEY AUTO_INCREMENT,
+    modele varchar(40),
+    marque varchar(40),
+    prix_par_jour decimal(10,2) unsigned,
+    disponible boolean default 1,
+    `image` varchar(256),
+    id_categorie int,
+    foreign key (id_categorie) references categorie(id_categorie)
+);
+
+
+
+CREATE TABLE reservation (
+    id_utilisateur INT,
+    id_vehicule INT,
+    date_debut DATE,
+    date_fin DATE,
+    statut_reservation ENUM('en_attente', 'confirmee', 'annulee') DEFAULT 'en_attente',
+    PRIMARY KEY (id_utilisateur, id_vehicule),
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur),
+    FOREIGN KEY (id_vehicule) REFERENCES vehicule(id_vehicule)
+);
+
+
+create table avis (
+    id_utilisateur INT,
+    id_vehicule INT,
+    commentaire text,
+    date_avis date,
+    PRIMARY KEY (id_utilisateur,id_vehicule),
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur),
+    FOREIGN KEY (id_vehicule) REFERENCES vehicule(id_vehicule)
+);
+
+
+
+ALTER TABLE avis
+ADD COLUMN deleted_at DATETIME DEFAULT NULL;
+
+/* vue sur la base de donnée pour lister les vehicule*/
+
+CREATE VIEW ListeVehicules AS
+SELECT 
+    v.id_vehicule,v.modele,v.marque,v.prix_par_jour,v.disponible,c.titre AS categorie,
+    COUNT(a.id_vehicule) AS nb_avis
+FROM vehicule v
+JOIN categorie c ON v.id_categorie = c.id_categorie
+LEFT JOIN avis a ON v.id_vehicule = a.id_vehicule
+GROUP BY v.id_vehicule;
+
+/*procédure stoke*/
+DELIMITER $$
+
+CREATE PROCEDURE AjouterReservation(
+IN p_id_utilisateur INT,
+IN p_id_vehicule INT,
+IN p_date_debut DATE,
+IN p_date_fin DATE
+)
+BEGIN
+    INSERT INTO reservation (id_utilisateur, id_vehicule, date_debut, date_fin, statut_reservation)
+    VALUES (p_id_utilisateur, p_id_vehicule, p_date_debut, p_date_fin, 'en_attente');
+END $$
+
+DELIMITER ;

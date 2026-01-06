@@ -1,0 +1,55 @@
+.menu-item {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg
+         text-gray-300
+         hover:bg-[#2563EB] hover:text-white
+         transition-all duration-200;
+}
+
+.menu-item svg {
+  @apply w-5 h-5 text-gray-400;
+}
+
+.menu-item:hover svg {
+  @apply text-white;
+}
+
+.menu-item-active {
+  @apply bg-[#2563EB] text-white;
+}
+
+.menu-item-active svg {
+  @apply text-white;
+}
+
+
+  .card {
+      @apply bg-white rounded-xl shadow-sm p-6;
+  }
+
+  .kpi-card {
+      @apply bg-white p-6 rounded-xl shadow-sm;
+  }
+
+  .kpi-card h3 {
+      @apply text-gray-500 text-sm;
+  }
+
+  .kpi-card p {
+      @apply text-2xl font-bold text-[#2563EB];
+  }
+
+  .btn-primary {
+      @apply bg-[#2563EB] text-white px-4 py-2 rounded-lg hover:bg-blue-700;
+  }
+
+  .btn-edit {
+      @apply text-blue-600 hover:underline;
+  }
+
+  .btn-delete {
+      @apply text-red-600 hover:underline;
+  }
+
+  body {
+      font-family: 'Inter', sans-serif;
+  }
