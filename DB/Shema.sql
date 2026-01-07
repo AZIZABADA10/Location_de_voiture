@@ -111,3 +111,12 @@ create table tagArticle(
     foreign key (id_tag) references Tag(id_tag),
     foreign key (id_article) references Article(id_article)
 );
+
+
+create table favorite(
+    id_favorite int AUTO_INCREMENT PRIMARY key,
+    id_article int,
+    id_utilisateur int,
+    foreign key (id_article) references Article(id_article),
+    foreign key (id_utilisateur) references utilisateur(id_utilisateur)
+);
