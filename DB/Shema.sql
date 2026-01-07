@@ -69,16 +69,16 @@ GROUP BY v.id_vehicule;
 /*procédure stoke*/
 DELIMITER $$
 
-CREATE PROCEDURE AjouterReservation(
+create PROCEDURE AjouterReservation(
 IN p_id_utilisateur INT,
 IN p_id_vehicule INT,
 IN p_date_debut DATE,
 IN p_date_fin DATE
 )
-BEGIN
+begin
     INSERT INTO reservation (id_utilisateur, id_vehicule, date_debut, date_fin, statut_reservation)
     VALUES (p_id_utilisateur, p_id_vehicule, p_date_debut, p_date_fin, 'en_attente');
-END $$
+end $$
 
 DELIMITER ;
 
@@ -114,7 +114,7 @@ create table tagArticle(
 
 
 create table favorite(
-    id_favorite int AUTO_INCREMENT PRIMARY key,
+    id_favorite int AUTO_INCREMENT primary key,
     id_article int,
     id_utilisateur int,
     foreign key (id_article) references Article(id_article),
