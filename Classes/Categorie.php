@@ -32,8 +32,7 @@ class Categorie
 
     public function modifierCategorie(): bool
     {
-        $sql = "UPDATE categorie SET titre=:titre, description=:description
-                WHERE id_categorie=:id";
+        $sql = "UPDATE categorie SET titre=:titre, description=:description WHERE id_categorie=:id";
 
         return Database::getInstance()->getConnexion()->prepare($sql)
             ->execute([
