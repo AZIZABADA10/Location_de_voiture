@@ -31,9 +31,32 @@ class Article
         return $stmt -> execute([$this->titre,$this->contenu,$this->statut_article,$this->id_theme]);
     }
 
-    public function modifierArticle():bool
+    public function modifierArticle(int $id): bool
     {
         $connexion = Database::getInstance()->getConnexion();
-        $sql = "INSERT INTO Article";
+        $sql = "UPDATE Article  SET titre=?,contenu=?,statut_article=?,id_theme=? where id = ?";
+        $stmt = $connexion -> prepare($sql);
+        return $stmt->execute([$this->titre,$this->contenu,$this->statut_article,$this->id_theme]);
     }
+
+    public function supprimerArticle(int $id): bool
+    {
+        $sql = "DELETE FROM Article WHERE $id = ?";
+        $stmt = $connexion -> prepare($sql);
+        return $stmt -> execute([$id]);
+    }
+
+    public function getAllArticel(): array
+    {
+        $stmt = $connexion -> prepare("SELECT * FROM Article");
+        return  $stmt -> execute();
+    }
+
+    public function getArticelById(int $id)
+    {
+        $stmt = $connexion -> prepare("SELECT * FROM Article where id = ?");
+        return  $stmt -> execute([$id]);
+    }
+
+     
 }
