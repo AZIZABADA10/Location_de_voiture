@@ -7,7 +7,7 @@ class Database
 {
     private static ?Database $instance = null;
     private PDO $con;
-    private string $dsn = "mysql:host=localhost;dbname=mabagnole";
+    private string $dsn = "mysql:host=localhost;dbname=mabagnole_v2";
     private string $user = 'root';
     private string $pws = ''; 
 
