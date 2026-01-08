@@ -65,7 +65,7 @@ class Theme
         $con = Database::getInstance()->getConnexion();
         $sql = "SELECT * FROM Theme WHERE id_theme = ?";
         $stmt = $con->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->execute([$id]);  
 
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
