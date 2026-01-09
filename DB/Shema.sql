@@ -93,6 +93,8 @@ CREATE table Article (
     statut_article boolean,
     id_theme int,
     foreign key (id_theme) references Theme(id_theme)
+    id_utilisateur int,
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );
 
 create table Tag (
@@ -123,5 +125,7 @@ CREATE TABLE commentaire (
     date_commentaire DATETIME DEFAULT CURRENT_TIMESTAMP,
     est_supprime BOOLEAN DEFAULT 0,
     id_article INT NOT NULL,
-    FOREIGN KEY (id_article) REFERENCES article(id_article)
+    FOREIGN KEY (id_article) REFERENCES article(id_article),
+    id_utilisateur INT NOT NULL,
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );
