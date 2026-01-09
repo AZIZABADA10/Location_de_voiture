@@ -52,21 +52,26 @@ class Theme
         return $stmt->execute([$id]);
     }
 
-    public function getAllTheme(): array
-    {
-        $con = Database::getInstance()->getConnexion();
-        $sql = "SELECT * FROM Theme";
 
-        return $con->query($sql)->fetchAll(PDO::FETCH_OBJ);
+    public static function getAllTheme(): array {
+        $con = Database::getInstance()->getConnexion();
+        $stmt = $con->prepare("SELECT * FROM Theme");
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getThemeById(int $id): ?object
+
+
+    public static function getThemeById(int $id): ?object
     {
         $con = Database::getInstance()->getConnexion();
         $sql = "SELECT * FROM Theme WHERE id_theme = ?";
         $stmt = $con->prepare($sql);
         $stmt->execute([$id]);  
 
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        $theme = $stmt->fetch(PDO::FETCH_OBJ);
+        return $theme ?: null;
     }
+
 }
