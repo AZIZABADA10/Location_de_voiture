@@ -54,7 +54,7 @@ class TagArticle
         return $stmt->execute([$id]);
     }
 
-    public function getAll(): array
+    public static function getAllTagArticle(): array
     {
         $con = Database::getInstance()->getConnexion();
         $sql = "SELECT * FROM tagArticle";
@@ -64,7 +64,7 @@ class TagArticle
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getById(int $id): ?object
+    public static function getById(int $id): ?object
     {
         $con = Database::getInstance()->getConnexion();
         $sql = "SELECT * FROM tagArticle WHERE id_tagArticle = ?";
