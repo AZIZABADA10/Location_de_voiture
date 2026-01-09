@@ -63,7 +63,7 @@ class Article
         return $stmt->execute([$id]);
     }
 
-    public function getAllArticle(): array
+    public static function getAllArticle(): array
     {
         $connexion = Database::getInstance()->getConnexion();
         $stmt = $connexion->prepare("SELECT * FROM Article");
@@ -72,7 +72,7 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getArticleById(int $id): ?object
+    public static function getArticleById(int $id): ?object
     {
         $connexion = Database::getInstance()->getConnexion();
         $stmt = $connexion->prepare("SELECT * FROM Article WHERE id_article = ?");
@@ -80,4 +80,34 @@ class Article
 
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    public static function getAllArticleByTheme(int $id_theme, string $search = '', ?int $tag_id = null): array
+    {
+        $conn = Database::getInstance()->getConnexion();
+        
+        $sql = "SELECT a.* 
+                FROM Article a
+                LEFT JOIN tagArticle ta ON a.id_article = ta.id_article
+                LEFT JOIN Tag t ON ta.id_tag = t.id_tag
+                WHERE a.id_theme = ? AND a.statut_article = 1";
+        
+        $params = [$id_theme];
+
+        if ($search !== '') {
+            $sql .= " AND a.titre LIKE ?";
+            $params[] = "%$search%";
+        }
+
+        if ($tag_id !== null) {
+            $sql .= " AND ta.id_tag = ?";
+            $params[] = $tag_id;
+        }
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+
 }
